@@ -7,6 +7,24 @@ class SpellChecker:
     def __init__(self, view):
         self._multiDic = md.MultiDictionary()
         self._view = view
+    def handleClick(self,e):
+        if self._view._lista1.value !="Italian" and self._view._lista1.value!="English" and self._view._lista1.value!="Spanish":
+            self._view.robasotto.controls.append(ft.Text("inserisci lingua"))
+            self._view.update()
+            return
+        if  self._view._lista2.value !="Linear" and self._view._lista2.value!="Dicatomic" and self._view._lista2.value!="Default":
+            self._view.robasotto.controls.append(ft.Text("inserisci metodo di ricerca"))
+            self._view.update()
+            return
+        if  self._view._txtIn.value=="":
+            self._view.robasotto.controls.append(ft.Text("inserisci parole"))
+            self._view.update()
+            return
+        lista=self.handleSentence(self._view._txtIn.value,self._view._lista1.value.lower(), self._view._lista2.value)
+        self._view.robasotto.controls.append(ft.Text(f"frase inserita {self._view._txtIn.value}"))
+        self._view.robasotto.controls.append(ft.Text(f"parole errate: {lista[0]}"))
+        self._view.robasotto.controls.append(ft.Text(f"tempo richiesto dalla ricerca: {lista[1]}"))
+        self._view.update()
 
     def handleSentence(self, txtIn, language, modality):
         txtIn = replaceChars(txtIn.lower())
